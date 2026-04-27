@@ -1,0 +1,14 @@
+name: cd
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run : docker build . -t pawan407/library_system
+      - run : echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin 
+      - run : docker push pawan407/library_system:latest
